@@ -11,18 +11,24 @@ CREATE TABLE if not exists sub_rubro (
   sr_id_rubro INT,
   FOREIGN KEY (sr_id_rubro) REFERENCES rubro(id_rubro)
 );
+
 CREATE TABLE if not exists producto (
   pr_id_producto INT PRIMARY KEY auto_increment,
   pr_nombre_producto VARCHAR(255),
+  pr_id_rubro INT,
   pr_id_sub_rubro INT,
+  foreign key (pr_id_rubro) references rubro(id_rubro),
   FOREIGN KEY (pr_id_sub_rubro) REFERENCES sub_rubro(sr_id_sub_rubro)
-
 );
-INSERT INTO producto (pr_nombre_producto) VALUES ("Remera");
 
 INSERT INTO rubro (tipo_rubro) VALUES ("Textil");
+INSERT INTO rubro (tipo_rubro) VALUES ("Automotor");
 
-INSERT INTO sub_rubro (sr_nombre_subrubro) VALUES ("Hogar");
+INSERT INTO sub_rubro (sr_nombre_subrubro, sr_id_rubro) VALUES ("Hogar", '1');
+INSERT INTO sub_rubro (sr_nombre_subrubro) VALUES ("SUB");
+
+INSERT INTO producto (pr_nombre_producto, pr_id_rubro, pr_id_sub_rubro ) VALUES ("Remera",'1','1');
+INSERT INTO producto (pr_nombre_producto) VALUES ("Buzo");
 
 UPDATE producto SET pr_nombre_producto="pantalon" where pr_id_producto='1';
 
@@ -40,8 +46,8 @@ SELECT pr_nombre_producto FROM producto;
 
 SELECT tipo_rubro FROM rubro;
 
-DELETE FROM producto WHERE pr_id_producto = "1";
+DELETE FROM producto WHERE pr_id_producto = '1';
 
-DELETE FROM rubro WHERE id_rubro = "1";
+DELETE FROM sub_rubro WHERE sr_id_sub_rubro = '1';
 
-DELETE FROM sub_rubro WHERE sr_id_sub_rubro = "1";
+DELETE FROM rubro WHERE id_rubro = '1';
